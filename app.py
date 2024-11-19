@@ -18,6 +18,7 @@ def index():
     print('index start')
     return render_template("index.html")
 
+#test
 @app.route("/login", methods=['GET'])
 def login():
     print('login start')
