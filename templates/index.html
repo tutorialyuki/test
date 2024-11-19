@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="//code.jquery.com/jquery-1.12.1.min.js"></script>
+</head>
+
+<body>
+  this is the main page
+  <form method="POST" action="regist">
+    <p>title：<input type="text" name="title"></p>
+    <p>body：<input type="text" name="body"></p>
+    <p><input type="submit" value="登録"></p>
+  </form>
+  <button type="button" onclick="deleteUser()">削除</button>
+</body>
+
+<script>
+
+function deleteUser() {
+  console.log('deleteUser');
+  var t = $('input[name="title"]').val();
+  var b = $('input[name="body"]').val();
+
+  var xhr = new XMLHttpRequest();
+  var url = "http://127.0.0.1:5000/delete?title=" + t + '&body=' + b;
+  xhr.open('DELETE', url);
+  xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+          // サーバーからのレスポンスを処理する
+          console.log('deleteUser');
+      }
+  };
+  xhr.send();
+}
+
+</script>
+
+</html>
