@@ -4,7 +4,7 @@
 <body>
   <ul>
     {% for user in users %}
-    <li>{{ user.title }} : {{user.body}}</li>
+    <li>{{ user.id }} : {{ user.title }} {{user.body}}</li>
     {% endfor %}
   </ul>
 </body>

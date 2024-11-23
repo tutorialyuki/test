@@ -3,42 +3,38 @@
 
 <head>
   <script src="//code.jquery.com/jquery-1.12.1.min.js"></script>
+  <script src="/static/js/user_management.js"></script>
+  <link rel="stylesheet" href="/static/css/style.css">
 </head>
 
 <body>
-  this is the main page
+  <hr color="blue"> <!-- ラインを引く -->
+  <h1>THIS IS THE MAIN PAGE</h1>
+
+  <!-- 登録 -->
+  <hr color="blue"> <!-- ラインを引く -->
   <form method="POST" action="regist">
     <p>title：<input type="text" name="title"></p>
     <p>body：<input type="text" name="body"></p>
     <p><input type="submit" value="登録"></p>
   </form>
-  <button type="button" onclick="deleteUser()">削除</button>
+
+  <!-- 削除 -->
+  <hr color="blue"> <!-- ラインを引く -->
+  <div style="margin-top: 20px;">
+    <p>user id：<input type="text" name="user_id"></p>
+    <button type="button" onclick="deleteUser()">削除</button>
+    <div id="error"></div>
+  <div>
+
+  <!-- 一覧表示 -->
+  <hr color="red"> <!-- ラインを引く -->
+  <div style="margin-top: 20px;">
+    <button type="button" onclick="getAllUser()">一覧表示更新</button>
+    <div id="user_list"></div>
+  <div>
+
+  <hr color="red"> <!-- ラインを引く -->
 </body>
-
-<script>
-
-function deleteUser() {
-  console.log('deleteUser');
-  var t = $('input[name="title"]').val();
-  var b = $('input[name="body"]').val();
-
-  var xhr = new XMLHttpRequest();
-  var url = "http://127.0.0.1:5000/delete?title=" + t + '&body=' + b;
-  xhr.open('DELETE', url);
-  xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-          // サーバーからのレスポンスを処理する
-          console.log('deleteUser');
-      }
-  };
-  xhr.send();
-}
-
-function getAllUser() {
-
-
-}
-
-</script>
 
 </html>

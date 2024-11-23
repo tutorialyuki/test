@@ -1,0 +1,13 @@
+input[type=submit],
+button {
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 0.5;
+    padding: 0.5rem 2rem;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.3s;
+    letter-spacing: 0.1em;
+    color: #27ca50;
+    border-radius: 0.5rem;
+  }

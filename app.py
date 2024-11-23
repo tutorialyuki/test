@@ -18,7 +18,7 @@ def index():
     print('index start')
     return render_template("index.html")
 
-#test
+#メイン画面表示
 @app.route("/login", methods=['GET'])
 def login():
     print('login start')
@@ -41,6 +41,7 @@ def login():
 
     return jsonify({'responce':res})
 
+#ユーザー登録
 @app.route("/regist", methods=['POST'])
 def regist():
     print('regist start')
@@ -65,17 +66,18 @@ def regist():
 
     return render_template('regist.html', title=title, body=body)
 
+#ユーザー削除
 @app.route("/delete", methods=['DELETE'])
 def delete_user():
     print('delete start')
 
-    p1 = request.args.get('title')
-    p2 = request.args.get('body')
+    id = request.args.get('user_id')
     ret = 'NONE'
     session.begin()
     try:
         # データの削除
-        data = session.query(Users).filter(and_(Users.title == p1, Users.body == p2)).first()
+        #data = session.query(Users).filter(and_(Users.title == p1, Users.body == p2)).first()
+        data = session.query(Users).filter(and_(Users.id == id)).first()
         if data is not None:
             session.delete(data)
             session.commit()
@@ -83,13 +85,21 @@ def delete_user():
     except Exception as e:
         print(f"Error: {e}")
         session.rollback()
-        ret = 'NG'
+        session.close()  # セッションを閉じる
+        return render_template('err.html', id=id)
     finally:
         print('finally')
 
-    session.close()  # セッションを閉じる
-    return jsonify({'result': ret})
+    if ret == 'NONE':
+        session.close()  # セッションを閉じる
+        return jsonify({'responce':'NG'}), 404
 
+    # データ全取得
+    users = session.query(Users).all()
+    session.close()  # セッションを閉じる
+    return render_template('list.html', users=users)
+
+#ユーザー一覧取得
 @app.route("/get_all", methods=['GET'])
 def get_all():
     print('get_all start')
@@ -99,7 +109,7 @@ def get_all():
         # データ全取得
         users = session.query(Users).all()
         for user in users:
-            res.append({'title':user.title, 'body':user.body})
+            res.append({'id':user.id, 'title':user.title, 'body':user.body})
 
     except Exception as e:
         print(f"Error: {e}")
@@ -107,7 +117,6 @@ def get_all():
     finally:
         print('finally')
         session.close()  # セッションを閉じる
-        #return jsonify({'responce':res})
         return render_template('list.html', users=users)
 
 if __name__ == ('__main__'):
