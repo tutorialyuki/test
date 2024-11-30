@@ -1,6 +1,6 @@
 import json
 from dbAccessor  import Base, session 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 from flask import render_template, request
 from sqlalchemy import Table, Column, Integer, String, MetaData
 from sqlalchemy import and_, or_
@@ -10,15 +10,19 @@ from users import Users
 
 app = Flask(__name__)
 
+# 日本語文字化け対応
+app.json.ensure_ascii = False
+
 # メタデータとテーブル定義
 metadata = MetaData()
 
+#メイン画面表示
 @app.route("/", methods=['GET'])
 def index():
     print('index start')
     return render_template("index.html")
 
-#メイン画面表示
+#ログイン
 @app.route("/login", methods=['GET'])
 def login():
     print('login start')
@@ -39,7 +43,14 @@ def login():
         print('finally')
         session.close()  # セッションを閉じる
 
-    return jsonify({'responce':res})
+    if res == 'OK':
+        msg = 'ログインに成功しました。'
+    else:
+        msg = 'ログインに失敗しました。'
+    #msg = 'ログインに成功しました。' if res == 'OK' else 'ログインに失敗しました。'
+
+    #return make_response(jsonify({'responce':res, 'msg': msg}), 200)
+    return jsonify({'responce':res, 'msg': msg})
 
 #ユーザー登録
 @app.route("/regist", methods=['POST'])

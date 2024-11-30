@@ -1,5 +1,4 @@
-input[type=submit],
-button {
+.button {
     font-size: 1.4rem;
     font-weight: 700;
     line-height: 0.5;

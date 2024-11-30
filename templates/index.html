@@ -2,7 +2,8 @@
 <html>
 
 <head>
-  <script src="//code.jquery.com/jquery-1.12.1.min.js"></script>
+  <script src="/static/js/jquery-3.7.1.js"></script>
+  <script src="/static/js/utility.js"></script>
   <script src="/static/js/user_management.js"></script>
   <link rel="stylesheet" href="/static/css/style.css">
 </head>
@@ -16,21 +17,27 @@
   <form method="POST" action="regist">
     <p>title：<input type="text" name="title"></p>
     <p>body：<input type="text" name="body"></p>
-    <p><input type="submit" value="登録"></p>
+    <p><input class="button" type="submit" value="登録"></p>
   </form>
+  
+  <!-- ログイン -->
+  <div style="margin-top: 20px;">
+    <button class="button" onclick="loginUser()">ログイン</button>
+    <div id="login_result"></div>
+  <div>
 
   <!-- 削除 -->
   <hr color="blue"> <!-- ラインを引く -->
   <div style="margin-top: 20px;">
     <p>user id：<input type="text" name="user_id"></p>
-    <button type="button" onclick="deleteUser()">削除</button>
-    <div id="error"></div>
+    <button class="button" onclick="deleteUser()">削除</button>
+    <div id="delete_error"></div>
   <div>
 
   <!-- 一覧表示 -->
   <hr color="red"> <!-- ラインを引く -->
   <div style="margin-top: 20px;">
-    <button type="button" onclick="getAllUser()">一覧表示更新</button>
+    <button class="button" onclick="getAllUser()">一覧表示更新</button>
     <div id="user_list"></div>
   <div>
 
